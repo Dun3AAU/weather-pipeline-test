@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Poem 🌤️</title>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #7dd3fc;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
+        .poem {
+            background: #1e293b;
+            border-left: 4px solid #7dd3fc;
+            padding: 30px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+        .weather-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+        .weather-table th {
+            background: #1e293b;
+            color: #7dd3fc;
+            padding: 10px;
+            text-align: left;
+        }
+        .weather-table td {
+            padding: 10px;
+            border-bottom: 1px solid #334155;
+        }
+        .weather-table tr:hover {
+            background: #1e293b;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #475569;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🌤️ Daily Weather Poem</h1>
+    <p class="subtitle">Comparing Faisalabad 🇵🇰 · Islamabad 🇵🇰 · Aalborg 🇩🇰</p>
+
+    <div class="poem">
+<!-- POEM_START -->
+Poem will appear here after the first pipeline run...
+<!-- POEM_END -->
+    </div>
+
+    <h2 style="margin-top:40px; color:#7dd3fc;">📊 Tomorrow's Forecast</h2>
+    <table class="weather-table">
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Max Temp (°C)</th>
+                <th>Precipitation (mm)</th>
+                <th>Wind (km/h)</th>
+                <th>Cloud Cover (%)</th>
+                <th>Humidity (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+<!-- TABLE_START -->
+<tr><td colspan="6" style="color:#94a3b8;">Data will appear after the first pipeline run...</td></tr>
+<!-- TABLE_END -->
+        </tbody>
+    </table>
+
+    <p class="footer">Updated daily at 20:00 Danish time via GitHub Actions 🤖</p>
+
+</body>
+</html>

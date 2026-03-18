@@ -9,22 +9,24 @@ LOCATIONS = [
     {"name": "Aalborg",    "lat": 57.0488, "lon": 9.9217},
 ]
 
-# Weather variables to fetch
-VARIABLES = "temperature_2m_max,precipitation_sum,windspeed_10m_max,cloudcover_mean,relativehumidity_2m_max"
-
 def fetch_weather(location):
     tomorrow = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
     url = "https://api.open-meteo.com/v1/forecast"
     params = {
         "latitude": location["lat"],
         "longitude": location["lon"],
-        "daily": VARIABLES,
+        "daily": "temperature_2m_max,precipitation_sum,windspeed_10m_max",
         "timezone": "auto",
         "start_date": tomorrow,
         "end_date": tomorrow,
     }
     response = requests.get(url, params=params)
     data = response.json()
+
+    if "daily" not in data:
+        print(f"API error for {location['name']}: {data}")
+        raise Exception(f"No daily data for {location['name']}")
+
     daily = data["daily"]
     return {
         "location": location["name"],
@@ -32,8 +34,6 @@ def fetch_weather(location):
         "temp_max": daily["temperature_2m_max"][0],
         "precipitation": daily["precipitation_sum"][0],
         "windspeed": daily["windspeed_10m_max"][0],
-        "cloudcover": daily["cloudcover_mean"][0],
-        "humidity": daily["relativehumidity_2m_max"][0],
     }
 
 def save_to_db(records):
@@ -47,18 +47,16 @@ def save_to_db(records):
             temp_max REAL,
             precipitation REAL,
             windspeed REAL,
-            cloudcover REAL,
-            humidity REAL,
             fetched_at TEXT
         )
     """)
     for r in records:
         cur.execute("""
-            INSERT INTO weather (location, date, temp_max, precipitation, windspeed, cloudcover, humidity, fetched_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO weather (location, date, temp_max, precipitation, windspeed, fetched_at)
+            VALUES (?, ?, ?, ?, ?, ?)
         """, (
-            r["location"], r["date"], r["temp_max"], r["precipitation"],
-            r["windspeed"], r["cloudcover"], r["humidity"],
+            r["location"], r["date"], r["temp_max"],
+            r["precipitation"], r["windspeed"],
             datetime.now().isoformat()
         ))
     conn.commit()

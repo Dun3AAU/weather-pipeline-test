@@ -4,7 +4,7 @@ def get_latest_weather():
     conn = sqlite3.connect("weather.db")
     cur = conn.cursor()
     cur.execute("""
-        SELECT location, date, temp_max, precipitation, windspeed, cloudcover, humidity
+        SELECT location, date, temp_max, precipitation, windspeed
         FROM weather
         ORDER BY fetched_at DESC
         LIMIT 3
@@ -16,15 +16,13 @@ def get_latest_weather():
 def build_table_rows(weather_data):
     rows = ""
     for row in weather_data:
-        location, date, temp, rain, wind, cloud, humidity = row
+        location, date, temp, rain, wind = row
         rows += f"""
         <tr>
             <td>{location}</td>
             <td>{temp}</td>
             <td>{rain}</td>
             <td>{wind}</td>
-            <td>{cloud}</td>
-            <td>{humidity}</td>
         </tr>"""
     return rows
 
